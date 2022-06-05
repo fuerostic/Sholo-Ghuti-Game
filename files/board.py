@@ -1,14 +1,14 @@
 import pygame
-
-from .constants import BLACK, COLS, GREY, RADIUS, ROWS, RED, SQUARE_SIZE, WHITE
+from .piece import Piece
+from .constants import BLACK, BLUE, COLS, GREY, RADIUS, ROWS, RED, SQUARE_SIZE, WHITE
 
 class Board:
     def __init__(self):
         self.board = []
-        self.selected_piece = None
+        # self.selected_piece = None
         self.red_left = self.white_left = 16
         self.red_kings = self.white_kings = 0
-        # self.create_board()
+        self.create_board()
 
     def draw_line(self,point1,point2,win):
         y1,x1 = point1
@@ -39,6 +39,52 @@ class Board:
             for point2 in point2_list:
                 self.draw_line(point1,point2,win)
 
+    def get_piece(self, row, col):
+        return self.board[row][col]
+
+    def create_board(self):
+        for row in range(COLS):
+            self.board.append([])
+            for col in range(ROWS):
+                if row==0:
+                    if col==0 or col==2 or col==4:
+                        self.board[row].append(Piece(row,col,BLUE))
+                    else:
+                        self.board[row].append(-1)
+                elif row==1:
+                    if col==1 or col==2 or col==3:
+                        self.board[row].append(Piece(row,col,BLUE))
+                    else:
+                        self.board[row].append(-1)
+                elif row ==2 or row ==3:
+                    self.board[row].append(Piece(row,col,BLUE))
+                elif row == 4:
+                    self.board[row].append(0)
+                elif row ==5 or row ==6:
+                    self.board[row].append(Piece(row,col,RED))
+                elif row==7:
+                    if col==1 or col==2 or col==3:
+                        self.board[row].append(Piece(row,col,RED))
+                    else:
+                        self.board[row].append(-1)
+
+                elif row==8:
+                    if col==0 or col==2 or col==4:
+                        self.board[row].append(Piece(row,col,RED))
+                    else:
+                        self.board[row].append(-1)
+                else:
+                    self.board[row].append(0)
+
+    def draw(self,win):
+        self.draw_points(win)
+        for row in range(COLS):
+            for col in range(ROWS):
+                piece = self.board[row][col]
+                if piece != 0 and piece !=-1:
+                    piece.draw(win)
+
+                
                 
         
 

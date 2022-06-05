@@ -26,7 +26,7 @@ def main():
                 
                 pass
 
-        board.draw_points(WIN)
+        board.draw(WIN)
         pygame.display.update()
 
     pygame.quit()
