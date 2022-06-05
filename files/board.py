@@ -7,7 +7,7 @@ class Board:
         self.board = []
         # self.selected_piece = None
         self.red_left = self.white_left = 16
-        self.red_kings = self.white_kings = 0
+        # self.red_kings = self.white_kings = 0
         self.create_board()
 
     def draw_line(self,point1,point2,win):
@@ -75,6 +75,12 @@ class Board:
                         self.board[row].append(-1)
                 else:
                     self.board[row].append(0)
+
+    def move(self, piece, row, col):
+        print(self.board[row][col])
+        print(self.board)
+        self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col] ,self.board[piece.row][piece.col]
+        piece.move(row,col)
 
     def draw(self,win):
         self.draw_points(win)
