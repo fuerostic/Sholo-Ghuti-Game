@@ -3,10 +3,48 @@ from .piece import Piece
 from .constants import BLACK, BLUE, COLS, GREY, RADIUS, ROWS, RED, SQUARE_SIZE, WHITE
 
 class Board:
+
     def __init__(self):
         self.board = []
         # self.selected_piece = None
         self.red_left = self.white_left = 16
+        self.valids = {(0,0):[(0,2),(1,1)], 
+                        (0,2):[(0,0), (0,4),(1,2)],
+                        (0,4):[(0,2),(1,3)],
+                        (1,1):[(0,0),(1,2),(2,2)],
+                        (1,2):[(0,2),(1,1),(1,3),(2,2)],
+                        (1,3):[(0,4),(1,2),(2,2)],
+                        (2,0):[(2,1),(3,0),(3,1)],
+                        (2,1):[(2,0),(2,2),(3,1)],
+                        (2,2):[(1,1),(1,2),(1,3),(2,1),(2,3),(3,1),(3,2),(3,3)],
+                        (2,3):[(2,2),(2,4),(3,3)],
+                        (2,4):[(2,3),(3,3),(3,4)],
+                        (3,0):[(2,0),(3,1),(4,0)],
+                        (3,1):[(2,0),(2,1),(2,2),(3,0),(3,2),(4,0),(4,1),(4,2)],
+                        (3,2):[(2,2),(3,1),(3,3),(4,2)],
+                        (3,3):[(2,2),(2,3),(2,4),(3,2),(3,4),(4,2),(4,3),(4,4)],
+                        (3,4):[(2,4),(3,3),(4,4)],
+                        (4,0):[(3,0),(3,1),(4,1),(5,0),(5,1)],
+                        (4,1):[(3,1),(4,0),(4,2),(5,1)],
+                        (4,2):[(3,1),(3,2),(3,3),(4,1),(4,3),(5,1),(5,2),(5,3)],
+                        (4,3):[(3,3),(4,2),(4,4),(5,3)],
+                        (4,4):[(3,3),(3,4),(4,3),(5,3),(5,4)],
+                        (5,0):[(4,0),(5,1),(6,0)],
+                        (5,1):[(4,0),(4,1),(4,2),(5,0),(5,2),(6,0),(6,1),(6,2)],
+                        (5,2):[(4,2),(5,1),(5,3),(6,2)],
+                        (5,3):[(4,2),(4,3),(4,4),(5,2),(5,3),(5,4),(6,2),(6,3),(6,4)],
+                        (5,4):[(4,4),(5,3),(6,4)],
+                        (6,0):[(5,0),(5,1),(6,1)],
+                        (6,1):[(5,1),(6,0),(6,2)],
+                        (6,2):[(5,1),(5,2),(5,3),(6,1),(6,3),(7,1),(7,2),(7,3)],
+                        (6,3):[(5,2),(6,2),(6,4)],
+                        (6,4):[(5,3),(5,4),(6,3)],
+                        (7,1):[(6,2),(7,2),(8,0)],
+                        (7,2):[(6,2),(7,1),(7,3),(8,2)],
+                        (7,3):[(6,2),(7,2),(8,4)],
+                        (8,0):[(7,1),(8,2)],
+                        (8,2):[(7,2),(8,0),(8,4)],
+                        (8,4):[(7,3),(8,2)]}
         # self.red_kings = self.white_kings = 0
         self.create_board()
 
@@ -20,8 +58,8 @@ class Board:
         OUTLINE  = 2
         win.fill(WHITE)
         point_list = []
-        point_list1 = [(0,0),(1,1),(2,0),(3,0),(4,0),(5,0),(6,0),(7,1),(8,0),(0,2),(2,4)]
-        point_list2= [[(0,4),(4,4)],[(1,3)],[(2,4),(6,4),(6,0)],[(3,4)],[(0,4),(4,4),(8,4)],[(5,4)],[(2,4),(6,4)],[(7,3)],[(4,4),(8,4)],[(8,2)],[(6,4)]]
+        point_list1 = [(0,0),(1,1),(2,0),(3,0),(4,0),(5,0),(6,0),(7,1),(8,0),(0,2),(2,4),(2,1),(2,3)]
+        point_list2= [[(0,4),(4,4)],[(1,3)],[(2,4),(6,4),(6,0)],[(3,4)],[(0,4),(4,4),(8,4)],[(5,4)],[(2,4),(6,4)],[(7,3)],[(4,4),(8,4)],[(8,2)],[(6,4)],[(6,1)],[(6,3)]]
         blank_list = [(0,1),(0,3),(1,0),(1,4),(7,0),(7,4),(8,1),(8,3)]
         for col in range(COLS):
             for row in range(ROWS):
@@ -77,10 +115,10 @@ class Board:
                     self.board[row].append(0)
 
     def move(self, piece, row, col):
-        print(self.board[row][col])
-        print(self.board)
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col] ,self.board[piece.row][piece.col]
         piece.move(row,col)
+        print(self.board[row][col])
+        print(self.board)
 
     def draw(self,win):
         self.draw_points(win)
@@ -89,6 +127,40 @@ class Board:
                 piece = self.board[row][col]
                 if piece != 0 and piece !=-1:
                     piece.draw(win)
+
+        
+
+    def remove(self, pieces):
+        for piece in pieces:
+            self.board[piece.row][piece.col] = 0
+            if piece != 0:
+                if piece.color == RED:
+                    self.red_left -= 1
+                else:
+                    self.white_left -= 1
+    
+    def winner(self):
+        if self.red_left <= 0:
+            return BLUE
+        elif self.white_left <= 0:
+            return RED
+        
+        return None 
+    
+    def get_valid_moves(self, piece):
+        moves = {}
+        left = piece.col - 1
+        right = piece.col + 1
+        row = piece.row
+
+        if piece.color == RED or piece.king:
+            moves.update(self._traverse_left(row -1, max(row-3, -1), -1, piece.color, left))
+            moves.update(self._traverse_right(row -1, max(row-3, -1), -1, piece.color, right))
+        if piece.color == WHITE or piece.king:
+            moves.update(self._traverse_left(row +1, min(row+3, ROWS), 1, piece.color, left))
+            moves.update(self._traverse_right(row +1, min(row+3, ROWS), 1, piece.color, right))
+    
+        return moves
 
                 
                 
