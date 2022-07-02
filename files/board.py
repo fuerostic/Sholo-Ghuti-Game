@@ -180,120 +180,23 @@ class Board:
             if current==0:
                 valids.append(move)
                 skipped[move] = 0
-            elif current != -1 and current.color != color:
-
+            elif current != -1 and current!=0 and current.color != color :
+                print(current.color)
+                print(color)
                 direction = [move[0]-piece.row,move[1]-piece.col]
 
-                if  move[0] + direction[0] >0 and move[1]+ direction[1]>0 and move[0] + direction[0] < COLS and move[1]+ direction[1]  < ROWS:
+                if  move[0] + direction[0] >=0 and move[1]+ direction[1]>=0 and move[0] + direction[0] < COLS and move[1]+ direction[1]  < ROWS:
                     print("moves: " + str(move[0] + direction[0]) + " " + str(move[1] + direction[1]))
                     next = self.board[move[0] + direction[0]][move[1] + direction[1]]
 
                     print()
+                    print(next)
                     if next ==0:
                         catch+=1
                         valids.append((move[0] + direction[0],move[1]+ direction[1]))
                         skipped[(move[0] + direction[0],move[1]+ direction[1])] = (move[0],move[1])
 
+
         return  [valids,skipped,catch]
 
-
-
-
-
-    # def _traverse_left(self,start, stop, step, color, left,skipped=[]):
-    #     moves = {}
-    #     last = []
-    #     for r in range(start, stop,step):
-    #         if left<0:
-    #             break
-    #         current = self.board.get_piece(r,left)
-    #         if current ==0:
-    #             if skip_only and not last:
-    #                 break
-    #
-    #         left-=1
-    #     pass
-
-    def _traverse_right(self,start, stop, step, color, right):
-        for r in range(start, stop,step):
-            if right>ROWS:
-                break
-        pass
-
-    def _traverse_up(self,start, stop, step, color, up):
-        for r in range(start, stop,step):
-            if up<0:
-                break
-
-
-
-        pass
-
-    def _traverse_down(self,start, stop, step, color, down):
-        for r in range(start, stop,step):
-            if down>COLS:
-                break
-        pass
-
-    def _traverse_left_down(self,start, stop, step, color, down_left ):
-        pass
-
-    def _traverse_right_down(self,start, stop, step, color, down_right):
-        pass
-
-    def _traverse_left_up(self,start, stop, step, color, up_left):
-        pass
-
-    def _traverse_right_up(self,start, stop, step, color, up_right):
-        pass
-
-
-                
-                
-        
-
-    
-    
-                
-        
-
-
-    # def move(self, piece, row, col):
-    #     self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col] ,self.board[piece.row][piece.col]
-    #     piece.move(row,col)
-
-    #     if row == ROWS or row ==0:
-    #         piece.make_king()
-    #         if piece.color == WHITE:
-    #             self.white_kings +=1
-    #         else:
-    #             self.red_kings +=1
-
-    # def get_piece(self, row, col):
-    #     return self.board[row][col]
-
-    # def create_board(self):
-    #     for row in range(ROWS):
-    #         self.board.append([])
-    #         for col in range(COLS):
-    #             if col %2 == ((row+1) %2):
-    #                 if row<3:
-    #                     self.board[row].append(Piece(row,col,WHITE))
-    #                 elif row> 4:
-    #                     self.board[row].append(Piece(row,col,RED))
-    #                 else:
-    #                     self.board[row].append(0)
-
-    #             else:
-    #                 self.board[row].append(0)
-
-
-    # def draw(self,win):
-    #     self.draw_squares(win)
-    #     for row in range(ROWS):
-    #         for col in range(COLS):
-    #             piece = self.board[row][col]
-    #             if piece != 0:
-    #                 piece.draw(win)
-                        
 
