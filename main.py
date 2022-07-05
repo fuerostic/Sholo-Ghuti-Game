@@ -28,8 +28,8 @@ def main():
         clock.tick(FPS)
 
         if game.turn == BLUE:
-            value, new_board = minimax(game.get_board(),3,BLUE, game)
-            #value, new_board = minimax_pruning(game.get_board(), 0,True, game, float('-inf'), float('inf'))
+            #value, new_board = minimax(game.get_board(),3,True, game)
+            value, new_board = minimax_pruning(game.get_board(), 3,True, game, float('-inf'), float('inf'))
             game.ai_move(new_board)
 
         if game.winner()!= None:
