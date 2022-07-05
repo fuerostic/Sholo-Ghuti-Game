@@ -3,6 +3,7 @@ from files.constants import SQUARE_SIZE, WIDTH,HEIGHT,RED, BLUE
 from files.board import Board
 from files.game import Game
 from minimax.algorithm import minimax
+from alphabeta.algorithm import minimax_pruning
 
 FPS = 60
 
@@ -28,6 +29,7 @@ def main():
 
         if game.turn == BLUE:
             value, new_board = minimax(game.get_board(),3,BLUE, game)
+            #value, new_board = minimax_pruning(game.get_board(), 0,True, game, float('-inf'), float('inf'))
             game.ai_move(new_board)
 
         if game.winner()!= None:
