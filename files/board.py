@@ -37,7 +37,7 @@ class Board:
                         (6,0):[(5,0),(5,1),(6,1)],
                         (6,1):[(5,1),(6,0),(6,2)],
                         (6,2):[(5,1),(5,2),(5,3),(6,1),(6,3),(7,1),(7,2),(7,3)],
-                        (6,3):[(5,2),(6,2),(6,4)],
+                        (6,3):[(5,3),(6,2),(6,4)],
                         (6,4):[(5,3),(5,4),(6,3)],
                         (7,1):[(6,2),(7,2),(8,0)],
                         (7,2):[(6,2),(7,1),(7,3),(8,2)],
@@ -129,8 +129,8 @@ class Board:
     def move(self, piece, row, col):
         self.board[piece.row][piece.col], self.board[row][col] = self.board[row][col] ,self.board[piece.row][piece.col]
         piece.move(row,col)
-        print(self.board[row][col])
-        print(self.board)
+        #print(self.board[row][col])
+        #print(self.board)
 
     def draw(self,win):
         self.draw_points(win)
@@ -166,9 +166,9 @@ class Board:
         down = piece.row +1
 
         current_pos = (piece.row,piece.col)
-        print(current_pos)
+        #print(current_pos)
         moves = self.valids[current_pos]
-        print(moves)
+        #print(moves)
         valid_moves = self._traverse(moves,piece.color,piece)
 
         # if piece.color == RED :
@@ -193,16 +193,16 @@ class Board:
                 valids.append(move)
                 skipped[move] = 0
             elif current != -1 and current!=0 and current.color != color :
-                print(current.color)
-                print(color)
+                #print(current.color)
+                #print(color)
                 direction = [move[0]-piece.row,move[1]-piece.col]
 
                 if  move[0] + direction[0] >=0 and move[1]+ direction[1]>=0 and move[0] + direction[0] < COLS and move[1]+ direction[1]  < ROWS:
-                    print("moves: " + str(move[0] + direction[0]) + " " + str(move[1] + direction[1]))
+                    #print("moves: " + str(move[0] + direction[0]) + " " + str(move[1] + direction[1]))
                     next = self.board[move[0] + direction[0]][move[1] + direction[1]]
 
-                    print()
-                    print(next)
+                    #print()
+                    #print(next)
                     if next ==0:
                         catch+=1
                         valids.append((move[0] + direction[0],move[1]+ direction[1]))

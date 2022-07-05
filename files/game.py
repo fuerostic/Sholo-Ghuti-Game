@@ -10,6 +10,12 @@ class Game:
     def update(self):
         self.board.draw(self.win)
         self.draw_valid_moves(self.valid_moves)
+        PLAY_TEXTb = pygame.font.SysFont('Corbel',12).render(f"AI: {16-self.board.red_left}", True, "blue")
+        PLAY_RECTb = PLAY_TEXTb.get_rect(center=(50, 740))
+        self.win.blit(PLAY_TEXTb, PLAY_RECTb)
+        PLAY_TEXTr = pygame.font.SysFont('Corbel',12).render(f"YOU: {16-self.board.blue_left}", True, "red")
+        PLAY_RECTr = PLAY_TEXTr.get_rect(center=(350, 740))
+        self.win.blit(PLAY_TEXTr, PLAY_RECTr)
         pygame.display.update()
 
     def _init(self):
@@ -35,7 +41,7 @@ class Game:
             self.selected = piece
 
             self.valid_moves, self.skipped ,_ = self.board.get_valid_moves(piece)
-            print(self.valid_moves)
+            #print(self.valid_moves)
             return True
 
         return False
@@ -72,8 +78,15 @@ class Game:
         self.valid_moves = []
         if self.turn == RED:
             self.turn = BLUE
+            turntextb = pygame.font.SysFont('Corbel',12).render("BLUE", True, "blue")
+            turnrectb = turntextb.get_rect(center=(200, 740))
+            self.win.blit(turntextb, turnrectb)
+
         else:
             self.turn = RED
+            turntextr = pygame.font.SysFont('Corbel',12).render("RED", True, "red")
+            turnrectr = turntextr.get_rect(center=(200, 740))
+            self.win.blit(turntextr, turnrectr)
 
     def winner(self):
         return self.board.winner()
