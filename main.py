@@ -46,10 +46,17 @@ def main():
                 while True:
                     Back_MOUSE_POS = pygame.mouse.get_pos()
                     WIN.fill("black")
-
-                    winnertext = get_font().render(f"{game.winner()} Has WON", True, "White")
+                    if(game.winner== RED):
+                        winnertext = get_font().render("RED Has WON", True, "White")
+                    else:
+                        winnertext = get_font().render("BLUE Has WON", True, "White")
+                    
+                    
                     winnerrect = winnertext.get_rect(center=(200, 400))
                     WIN.blit(winnertext, winnerrect)
+
+
+                    
                     run = False
                     #print(game.winner())
                     backbutton = Button(pos=(200, 450), 
@@ -112,12 +119,12 @@ def main():
 
             MENU_MOUSE_POS = pygame.mouse.get_pos()
 
-            MENU_TEXT = get_font().render("MAIN MENU", True, "#b68f40")
-            MENU_RECT = MENU_TEXT.get_rect(center=(200, 100))
+            MENU_TEXT = get_font().render("Sholo Ghuti", True, "#b68f40")
+            MENU_RECT = MENU_TEXT.get_rect(center=(200, 150))
 
-            PLAY_BUTTON = Button(pos=(200, 250), 
+            PLAY_BUTTON = Button(pos=(200, 350), 
                                 text_input="PLAY", font=get_font(), base_color="#d7fcd4", hovering_color="green")
-            QUIT_BUTTON = Button(pos=(200, 550), 
+            QUIT_BUTTON = Button(pos=(200, 450), 
                             text_input="QUIT", font=get_font(), base_color="#d7fcd4", hovering_color="red")
 
             WIN.blit(MENU_TEXT, MENU_RECT)

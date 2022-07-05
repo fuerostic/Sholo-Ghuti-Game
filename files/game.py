@@ -10,10 +10,10 @@ class Game:
     def update(self):
         self.board.draw(self.win)
         self.draw_valid_moves(self.valid_moves)
-        PLAY_TEXTb = pygame.font.SysFont('Corbel',12).render(f"AI: {16-self.board.red_left}", True, "blue")
+        PLAY_TEXTb = pygame.font.SysFont('Corbel',14).render(f"AI: {16-self.board.red_left}", True, "blue")
         PLAY_RECTb = PLAY_TEXTb.get_rect(center=(50, 740))
         self.win.blit(PLAY_TEXTb, PLAY_RECTb)
-        PLAY_TEXTr = pygame.font.SysFont('Corbel',12).render(f"YOU: {16-self.board.blue_left}", True, "red")
+        PLAY_TEXTr = pygame.font.SysFont('Corbel',14).render(f"YOU: {16-self.board.blue_left}", True, "red")
         PLAY_RECTr = PLAY_TEXTr.get_rect(center=(350, 740))
         self.win.blit(PLAY_TEXTr, PLAY_RECTr)
         pygame.display.update()
