@@ -54,7 +54,7 @@ class Game:
                 (r,c) = self.skipped[(row,col)]
                 piece = self.board.get_piece(r, c)
                 self.board.remove(piece)
-            # skipped = self.valid_moves[]
+
             if (self.skipped[(row, col)] != 0):
                 piece = self.board.get_piece(row, col)
                 _, _, catch = self.board.get_valid_moves(piece)

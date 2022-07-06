@@ -39,13 +39,6 @@ def simulate_move(piece, move ,board, game ,skipped):
         piece = board.get_piece(r, c)
         board.remove(piece)
 
-    if (skipped[(move[0], move[1])] != 0):
-        piece = board.get_piece(move[0], move[1])
-        _, _, catch = board.get_valid_moves(piece)
-        if catch == 0:
-            game.change_turn()
-    else:
-        game.change_turn()
 
     return board
 

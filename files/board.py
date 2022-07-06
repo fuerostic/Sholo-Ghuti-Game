@@ -1,5 +1,5 @@
 import pygame
-from .piece import Piece
+from .bead import Piece
 from .constants import BLACK, BLUE, COLS, GREY, RADIUS, ROWS, RED, SQUARE_SIZE, WHITE
 
 class Board:
@@ -159,11 +159,6 @@ class Board:
         return None 
     
     def get_valid_moves(self, piece):
-        moves = {}
-        left = piece.col - 1
-        right = piece.col + 1
-        up = piece.row - 1
-        down = piece.row +1
 
         current_pos = (piece.row,piece.col)
         #print(current_pos)

@@ -50,6 +50,7 @@ def simulate_move(piece, move ,board, game ,skipped):
         piece = board.get_piece(r, c)
         board.remove(piece)
 
+
     return board
 
 def get_all_moves(board, color , game):

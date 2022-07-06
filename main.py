@@ -2,10 +2,10 @@ import pygame, sys
 from files.constants import SQUARE_SIZE, WIDTH,HEIGHT,RED, BLUE
 from files.board import Board
 from files.game import Game
-from minimax.algorithm import minimax
-from alphabeta.algorithm import minimax_pruning
+from minimax.algo import minimax
+from alphabeta.algo import minimax_pruning
 from button import Button
-FPS = 60
+FPS = 30
 pygame.init()
 
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -38,8 +38,8 @@ def main():
             #PLAY_RECT = PLAY_TEXT.get_rect(center=(640, 260))
             #WIN.blit(PLAY_TEXT, PLAY_RECT)
             if game.turn == BLUE:
-                #value, new_board = minimax(game.get_board(),3,True, game)
-                value, new_board = minimax_pruning(game.get_board(), 3,True, game, float('-inf'), float('inf'))
+                value, new_board = minimax(game.get_board(),3,True, game)
+                #value, new_board = minimax_pruning(game.get_board(), 3,True, game, float('-inf'), float('inf'))
                 game.ai_move(new_board)
 
             if game.winner()!= None:
